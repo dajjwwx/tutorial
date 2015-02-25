@@ -1,0 +1,128 @@
+﻿http://scriptogr.am/bee/post/chinese-segment-by-sae
+中文分词是做自然语言理解的第一步，也是最重要的一步。分词的好坏直接影响着理解的准确度。 分词技术上，中文因为其独特性要比西文处理技术落后很大一段距离。网上存在许多中文分词的程序 库。这些程序库基本上在2010已没有太多更新。有名的中文分词库有
+
+    phpcws
+    scws
+    FudanNLP
+    ICTCLAS
+    IK
+    Paoding
+    MMSEG4J
+    盘古分词
+    Jcseg
+
+除了上述中文分词之外，最近SAE(新浪开发者平台)[http://sae.sina.com.cn]也提供了一个中 文分词的扩展服务。只要在上面部署的代码，那么就可以通过代码调用中文分词功能。下面是调用的 示例：
+
+<?php
+       $str = "明天星期天";
+       $seg = new SaeSegment();
+       $ret = $seg->segment($str, 1);
+
+       print_r($ret);    //输出
+
+       // 失败时输出错误码和错误信息
+       if ($ret === false)
+               var_dump($seg->errno(), $seg->errmsg());
+?>
+
+通过对比，新浪中文分词在分词上要比phpcws, scws精确。此外，新浪中文分词会把分词的词性也返回。 这对于我们进行一步做处理是十分好的。但是缺点就是你必须把应用部署至SAE之上。为了能让外部应用 使用中文分词功能，我们可以在SAE上面部署一个RESTful接口应用，以Web Services的方式提供中文 分词。RESTful于2000年时提出的一种JSON接口封装形式，现已成为主流Web Services的三大形式之一。 RESTful只是一种形式，你可以很自由地把现有的web应用封装成接口，因此RESTful成为移动互联网热捧。本文 参考PHP教程：REST API示例的形式对新浪中文分词进行封装。 其原文来自Create a RESTful Services API in PHP。 封装代码如下：
+
+<?
+
+    require_once("rest/Rest.inc.php");
+
+    class API extends REST {
+
+        public function __construct(){
+            parent::__construct();              
+
+        }
+
+        public function processApi(){
+            $func = strtolower(trim(str_replace("/","",$_REQUEST['m'])));
+
+            if((int)method_exists($this,$func) > 0)
+                $this->$func();
+            else
+                $this->response('',404);                
+        }
+
+        private function segment(){
+
+            if($this->get_request_method() != "POST"){
+                $this->response('',406);
+            }
+
+            $msg = $this->_request['msg'];
+
+            // Input validations
+            if(!empty($msg)){
+                $seg = new SaeSegment();
+                $ret = $seg->segment($msg, 1);
+                if ($ret === false){
+                    $error = array("status"=>$seg->errno(), "msg"=>$seg->errmsg());
+                    $this->response($this->json($error), 400);
+                }else{
+                    $this->response($this->json($ret), 200);
+                }
+            }
+            $error = array("status"=>"Failed", "msg"=>"Invalid Message");
+            $this->response($this->json($error), 400);
+        }
+
+        /*
+         *  Encode array into JSON
+        */
+        private function json($data){
+            if(is_array($data)){
+                return json_encode($data);
+            }
+        }
+
+    }
+
+    // Initiiate Library
+
+    $api = new API;
+    $api->processApi();
+?>
+
+好的，现在把上述代码托管至SAE。如果你没有用过SAE，那么看看这个入门指南应该十分有帮助。
+
+最后使用POSTMAN， 一个Restful测试工具，我们进行测试.
+
+url: http://XXXXX.sinaapp.com/API.php?m=segment
+
+msg: 帮我找一间课室
+
+产生JSON的分析结果如下：
+
+[
+    {
+        "word": "帮",
+        "word_tag": "170",
+        "index": "0"
+    },
+    {
+        "word": "我",
+        "word_tag": "123",
+        "index": "1"
+    },
+    {
+        "word": "找",
+        "word_tag": "170",
+        "index": "2"
+    },
+    {
+        "word": "一间",
+        "word_tag": "201",
+        "index": "3"
+    },
+    {
+        "word": "课室",
+        "word_tag": "95",
+        "index": "4"
+    }
+]
+
+相关词性说明，请参见这里。好吧，现在，你可以使用任何应用去调用这个中文分词接口了 而且用法特别简单。。。做你想做的邪恶的事吧！^_^
