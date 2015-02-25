@@ -1,0 +1,55 @@
+﻿http://www.open-open.com/news/view/1fc3e18
+
+8个实现在线浏览PDF文件的实用jQuery插件 
+
+在web开发当中我们经常需要进行需要在线浏览PDf内容，在线嵌入动态pdf，传统的解决方法安装客户端PDF阅读器，如果是在谷歌是可以在线浏览的，因为他自身就带了一些插件，以前遇到这样的问题往往是费时又费力，很不好解决，
+
+今天就给大家分享一系列使用javascript实现的pdf插件效果，无需借助第三方插件就可以实现在线浏览功能，非常实用。
+PDFObject
+
+8个实现在线浏览PDF文件的实用jQuery插件
+
+PDFobject可以帮助你在页面直接嵌入pdf文件，有时候有些项目需要动态地嵌入PDF文件。PDFObject为此而设计的，他能够快速和容易的嵌入PDF文件，PDFObject使用JavaScript来产生相同的符合标准的 标记，然后插入 到您的HTML元素的选择。您可以填满整个浏览器窗口，或将PDF格式转换成一个
+或其他块级元素。
+
+pdf.js
+
+8个实现在线浏览PDF文件的实用jQuery插件
+
+和 Google Chrome 使用的源自 Foxit 的闭源 PDF 浏览插件不同，PDF.js 是基于开放的 HTML5 及 JavaScript 技术实现的开源产品。
+
+pdf.js 是一个主要用于HTML5 平台上在线阅读PDF文档的小插件，基于JavaScript技术编写而成，无需任何本地技术支持。
+
+pdf.js是由Mozilla Labs发布的。他们的目标是创建一个通用的，基于标准的网络平台，能够解析和渲染PDF文件，并最终发布一个PDF阅读器扩展，毫无疑问 pdf.js 将被整合入 Gecko 成为 Firefox 的内嵌 PDF 阅读器，但是具体整合时间表尚未确定
+jsPDF
+
+8个实现在线浏览PDF文件的实用jQuery插件
+
+jsPDF 是一个使用Javascript语言生成PDF的开源库。你可以在Firefox插件，服务端脚本或是浏览器脚本中使用它。客户端Safari 和 iPhone Safari 支持得最好,其次是Opera和Windows下的Firefox 3等。IE暂不支持。。
+jQuery Media Plugin
+
+8个实现在线浏览PDF文件的实用jQuery插件
+
+jQuery Media Plugin是一款基于jQuery的网页媒体播放器插件，它支持大部分的网络多媒体播放器和多媒体格式，比如：Flash, Windows Media Player, Real Player, Quicktime, MP3,Silverlight, PDF。它根据当前的脚本配置，自动将a标签替换成div，并生成object, embed甚至是iframe代码，至于生成object还是embed，jQuery Media会根据当前平台自动判别，因此兼容性方面非常出色下面这段代码是jQuery Media生成后的。
+
+ 
+Google Docs PDF viewer
+
+8个实现在线浏览PDF文件的实用jQuery插件
+ZOHO Viewer
+
+8个实现在线浏览PDF文件的实用jQuery插件
+Anychart：使用JavaScript导出PDF
+
+8个实现在线浏览PDF文件的实用jQuery插件
+
+下图可以导出为PNG或JPG格式的静态图像或嵌入式静态图像，图表或一个完全互动的功能图
+
+ 
+jQuery Document Viewer
+
+8个实现在线浏览PDF文件的实用jQuery插件
+
+Document Viewer是一个jQuery插件，可以让你在网页中直接查看多种文件格式。文档浏览器支持的文件格式：PDF文件，文本文件，代码，图像，音频，视频等。
+
+来自：http://www.cnblogs.com/58top/archive/2012/11/26/a-list-of-jquery-pdf-viewers-available-at-the-moment.html
