@@ -1,0 +1,38 @@
+﻿http://my.oschina.net/u/1771420/blog/333009?p={{page}}
+
+1.在采用node.js+express开发过程使用到connect-flash时：
+
+1)npm install connect-flash --save,
+
+2)在app.js中要加上 var flash =require('connect-flash') 以及 app.use(flash());
+
+3)一定要记得将app.use(flash()) 放在 app.use(app.router)之前。
+
+4)使用flash时候，记得session是配套使用的，否则回报错，
+?
+1
+	
+Error: req.flash() requires sessions
+
+2.关于req.fash() requires sessions的问题
+
+要解决这个问题，首先要明白在express4.0之后session的一些变化。具体解决如下，
+
+1) npm install express-session -save.
+
+2)在app.js中要引入 var session = require('express-session');
+
+3)关于session的内容,如下：
+
+ app.use(session({
+      secret : settings.cookieSecret,
+      cookie : {maxAge : 3600},
+      store : new MongoStore({
+          db : settings.db
+      }),
+      resave : true,
+      saveUninitialized : true
+  }));
+4)一定要注意顺序，否则会有err
+
+app.use(session())在app.use(flash())前边，app.use(flash())在app.use(app.router)前边，这三个顺序正确了，基本就没有什么问题了。
